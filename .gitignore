@@ -1,0 +1,7 @@
+scratch
+*.swp
+*.back
+notes/
+backup/
+tmp/
+.acnh-data-api.rc
