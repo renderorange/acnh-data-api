@@ -5,3 +5,5 @@ notes/
 backup/
 tmp/
 .acnh-data-api.rc
+node_modules
+package-lock.json
