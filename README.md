@@ -10,6 +10,12 @@ Read-only api written in nodejs and express for viewing data exported from the o
 
 To install dependencies run `npm install` from the project directory.
 
+## CONFIGURATION
+
+`acnh-data-api` is configurated using the `.acnh-data-api.rc` file in the project directory.
+
+An example config is provided. Rename `.acnh-data-api.rc.example` to `.acnh-data-api.rc` to get started.
+
 ## AUTHOR
 
 Blaine Motsinger <blaine@renderorange.com>
