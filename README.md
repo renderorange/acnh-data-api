@@ -7,6 +7,8 @@ Read-only api written in nodejs and express for viewing data exported from the o
 - express
 - path
 - morgan
+- knex
+- sqlite3
 
 To install dependencies run `npm install` from the project directory.
 
