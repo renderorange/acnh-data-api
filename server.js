@@ -17,12 +17,14 @@ app.disable( 'x-powered-by' );
 
 // routes
 const root = require( './routes/root' );
+const accessories = require( './routes/accessories' );
 
 // logger
 app.use( logger( 'combined' ) );
 
 // load the routes
 app.use( '/', root );
+app.use( '/accessories', accessories );
 
 // default routes
 // return 404 for GET
@@ -33,7 +35,7 @@ app.get( '*', function( req, res ) {
 });
 
 // return 400 for everything else
-app.use( function( req, res ){
+app.use( function( req, res ) {
     res.status( response.status.HTTP_BAD_REQUEST.code )
        .header( 'Content-Type', 'text/plain' )
        .send( response.status.HTTP_BAD_REQUEST.string );
