@@ -1,5 +1,4 @@
-// acnh-data-api
-// root route and methods
+// root routes
 
 const express = require( 'express' );
 const router = express.Router();

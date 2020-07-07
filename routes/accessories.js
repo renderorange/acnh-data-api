@@ -1,15 +1,14 @@
-// trackability-api
 // accessories routes
 
 const express = require( 'express' );
 const router = express.Router();
-const dbh = require( './../lib/dbi' );
+const dbi = require( './../lib/dbi' );
 const response = require( './../lib/response' );
 
 const table = 'Accessories';
 
 router.get( '/', function( req, res ) {
-    dbh.get( table )
+    dbi.get( table )
         .then( function( rows ) {
             res.status( response.status.HTTP_OK.code )
                .header( 'Content-Type', 'application/json' )

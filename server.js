@@ -19,7 +19,6 @@ app.disable( 'x-powered-by' );
 const root = require( './routes/root' );
 const accessories = require( './routes/accessories' );
 
-// logger
 app.use( logger( 'combined' ) );
 
 // load the routes
@@ -27,24 +26,22 @@ app.use( '/', root );
 app.use( '/accessories', accessories );
 
 // default routes
-// return 404 for GET
+// NOT FOUND for any GET requests
 app.get( '*', function( req, res ) {
     res.status( response.status.HTTP_NOT_FOUND.code )
        .header( 'Content-Type', 'text/plain' )
        .send( response.status.HTTP_NOT_FOUND.string );
 });
 
-// return 400 for everything else
+// BAD REQUEST for anything else
 app.use( function( req, res ) {
     res.status( response.status.HTTP_BAD_REQUEST.code )
        .header( 'Content-Type', 'text/plain' )
        .send( response.status.HTTP_BAD_REQUEST.string );
 });
 
-// before starting the server, display the initial startup message
 console.log( '[info] acnh-data-api - version ' + version );
 
-// now start the server, listening on the configured port and address
 app.listen( config.app.port, config.app.address, function() {
     console.log(
         '[info] server started\n' +
