@@ -2,7 +2,7 @@
 
 Read-only api written in nodejs and express for viewing data exported from the official Data Spreadsheet for Animal Crossing New Horizons.
 
-The API is available at https://acnh.renderorange.com/api
+The API is available at https://api.acnh.renderorange.com
 
 ## DEPENDENCIES
 
