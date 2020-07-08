@@ -17,13 +17,11 @@ app.disable( 'x-powered-by' );
 
 // routes
 const root = require( './routes/root' );
-const accessories = require( './routes/accessories' );
 
 app.use( logger( 'combined' ) );
 
 // load the routes
 app.use( '/', root );
-app.use( '/accessories', accessories );
 
 // default routes
 // NOT FOUND for any GET requests
