@@ -18,7 +18,8 @@ app.disable( 'x-powered-by' );
 // routes
 const root = require( './routes/root' );
 
-app.use( logger( 'combined' ) );
+if ( app.get('env') !== 'test' )
+    app.use( logger( 'combined' ) );
 
 // load the routes
 app.use( '/', root );
