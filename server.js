@@ -46,3 +46,5 @@ app.listen( config.app.port, config.app.address, function() {
         '[info] serving: ' + config.app.address + ':' + config.app.port
     );
 });
+
+module.exports = app;
