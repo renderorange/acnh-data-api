@@ -1,205 +1,51 @@
 'use strict';
 
 const app = require( './../server' );
-const request = require( 'supertest' );
 const config = require( './../config/application' );
 const routes = config.tables;
+const request = require( 'supertest' );
+const assert = require( 'assert' );
+
+const agent = request.agent( app );
 
 describe( 'test known routes responses', function () {
     for ( let route in routes ) {
-        describe( 'GET /' + route, function () {
-            it( 'returns 200 OK', function ( done ) {
-                request( app )
-                    .get( '/' + route )
-                    .expect( 200 )
-                    .end( function( err, res ) {
-                        if ( err )
-                            return done( err );
-                        done();
-                    });
-            });
-
-            it( 'returns Content-Type application/json', function ( done ) {
-                request( app )
-                    .get( '/' + route )
-                    .expect( 'Content-Type', /application\/json/ )
-                    .end( function( err, res ) {
-                        if ( err )
-                            return done( err );
-                        done();
-                    });
-            });
-        });
-
-        describe( 'POST /' + route, function () {
-            it( 'returns 400 Bad Request', function ( done ) {
-                request( app )
-                    .post( '/' + route )
-                    .expect( 400 )
-                    .end( function( err, res ) {
-                        if ( err )
-                            return done( err );
-                        done();
-                    });
-            });
-
-            it( 'returns Content-Type text/plain', function ( done ) {
-                request( app )
-                    .post( '/' + route )
-                    .expect( 'Content-Type', /text\/plain/ )
-                    .end( function( err, res ) {
-                        if ( err )
-                            return done( err );
-                        done();
-                    });
-            });
-        });
-
-        describe( 'PUT /' + route, function () {
-            it( 'returns 400 Bad Request', function ( done ) {
-                request( app )
-                    .put( '/' + route )
-                    .expect( 400 )
-                    .end( function( err, res ) {
-                        if ( err )
-                            return done( err );
-                        done();
-                    });
-            });
-
-            it( 'returns Content-Type text/plain', function ( done ) {
-                request( app )
-                    .put( '/' + route )
-                    .expect( 'Content-Type', /text\/plain/ )
-                    .end( function( err, res ) {
-                        if ( err )
-                            return done( err );
-                        done();
-                    });
-            });
-        });
-
-        describe( 'DELETE /' + route, function () {
-            it( 'returns 400 Bad Request', function ( done ) {
-                request( app )
-                    .delete( '/' + route )
-                    .expect( 400 )
-                    .end( function( err, res ) {
-                        if ( err )
-                            return done( err );
-                        done();
-                    });
-            });
-
-            it( 'returns Content-Type text/plain', function ( done ) {
-                request( app )
-                    .delete( '/' + route )
-                    .expect( 'Content-Type', /text\/plain/ )
-                    .end( function( err, res ) {
-                        if ( err )
-                            return done( err );
-                        done();
-                    });
-            });
-        });
+        run_test( route, 'get', 200, 'application/json' );
+        run_test( route, 'post', 400, 'text/plain' );
+        run_test( route, 'put', 400, 'text/plain' );
+        run_test( route, 'delete', 400, 'text/plain' );
     }
 });
 
 describe( 'test unknown routes responses', function () {
     let route = 'unknown';
-    describe( 'GET /' + route, function () {
-        it( 'returns 404 Not Found', function ( done ) {
-            request( app )
-                .get( '/' + route )
-                .expect( 404 )
-                .end( function( err, res ) {
-                    if ( err )
-                        return done( err );
-                    done();
-                });
-        });
-
-        it( 'returns Content-Type text/plain', function ( done ) {
-            request( app )
-                .get( '/' + route )
-                .expect( 'Content-Type', /text\/plain/ )
-                .end( function( err, res ) {
-                    if ( err )
-                        return done( err );
-                    done();
-                });
-        });
-    });
-
-    describe( 'POST /' + route, function () {
-        it( 'returns 400 Bad Request', function ( done ) {
-            request( app )
-                .post( '/' + route )
-                .expect( 400 )
-                .end( function( err, res ) {
-                    if ( err )
-                        return done( err );
-                    done();
-                });
-        });
-
-        it( 'returns Content-Type text/plain', function ( done ) {
-            request( app )
-                .post( '/' + route )
-                .expect( 'Content-Type', /text\/plain/ )
-                .end( function( err, res ) {
-                    if ( err )
-                        return done( err );
-                    done();
-                });
-        });
-    });
-
-    describe( 'PUT /' + route, function () {
-        it( 'returns 400 Bad Request', function ( done ) {
-            request( app )
-                .put( '/' + route )
-                .expect( 400 )
-                .end( function( err, res ) {
-                    if ( err )
-                        return done( err );
-                    done();
-                });
-        });
-
-        it( 'returns Content-Type text/plain', function ( done ) {
-            request( app )
-                .put( '/' + route )
-                .expect( 'Content-Type', /text\/plain/ )
-                .end( function( err, res ) {
-                    if ( err )
-                        return done( err );
-                    done();
-                });
-        });
-    });
-
-    describe( 'DELETE /' + route, function () {
-        it( 'returns 400 Bad Request', function ( done ) {
-            request( app )
-                .delete( '/' + route )
-                .expect( 400 )
-                .end( function( err, res ) {
-                    if ( err )
-                        return done( err );
-                    done();
-                });
-        });
-
-        it( 'returns Content-Type text/plain', function ( done ) {
-            request( app )
-                .delete( '/' + route )
-                .expect( 'Content-Type', /text\/plain/ )
-                .end( function( err, res ) {
-                    if ( err )
-                        return done( err );
-                    done();
-                });
-        });
-    });
+    run_test( route, 'get', 404, 'text/plain' );
+    run_test( route, 'post', 400, 'text/plain' );
+    run_test( route, 'put', 400, 'text/plain' );
+    run_test( route, 'delete', 400, 'text/plain' );
 });
+
+function run_test ( route, method, status, content_type ) {
+    method = method.toUpperCase();
+    let content_regex = new RegExp( content_type );
+
+    describe( method + ' /' + route, function () {
+        it( 'returns ' + status, function ( done ) {
+            agent( method, '/' + route, function( err, res ) {
+                if ( err )
+                    return done( err );
+                assert.strictEqual( res.status, status );
+                done();
+            });
+        });
+
+        it( 'returns Content-Type ' + content_type, function ( done ) {
+            agent( method, '/' + route, function( err, res ) {
+                if ( err )
+                    return done( err );
+                assert.match( response.headers['Content-Type'], content_regex );
+                done();
+            });
+        });
+    });
+}
