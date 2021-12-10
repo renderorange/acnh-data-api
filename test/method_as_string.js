@@ -11,7 +11,7 @@ let method = 'get';
 
 describe( 'test known things', function () {
     it( 'returns ' + status, function ( done ) {
-        agent( method, '/' + route )
+        agent[method]('/' + route )
             .then( function( res ) {
                 assert.strictEqual( res.status, status );
                 done();
